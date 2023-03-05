@@ -1,0 +1,3 @@
+# ././requirements.txt in Root Directory
+# Path to Visual Studio requirements.txt below
+-r thusy-lang/requirements.txt
