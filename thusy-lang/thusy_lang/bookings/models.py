@@ -1,5 +1,6 @@
 from msilib.schema import Verb
 from django.db import models
+from djmoney.models.fields import MoneyField
 
 class Teacher(models.Model):
     first_name = models.CharField(
@@ -45,3 +46,8 @@ class Lesson(models.Model):
     name = models.CharField(
         verbose_name='Lesson Name',
         max_length=255)
+    price_per_hour=MoneyField(
+        max_digits=19,
+        decimal_places=2,
+        default_currency='EUR',
+        null=False)

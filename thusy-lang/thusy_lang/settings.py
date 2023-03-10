@@ -1,4 +1,4 @@
-"""
+﻿"""
 Django settings for thusy_lang project.
 
 Based on by 'django-admin startproject' using Django 2.1.2.
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djmoney',
     'thusy_lang.bookings',
 ]
 
@@ -121,6 +122,13 @@ USE_L10N = True
 USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+CURRENCIES = ('USD', 'EUR', 'GBP')
+CURRENCY_CHOICES = [
+    ('USD', 'USD $'),
+    ('EUR', 'EUR €'),
+    ('GBP', 'GBP £')
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
