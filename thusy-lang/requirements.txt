@@ -1,4 +1,4 @@
-django~=4.0
+django==3.2.*
 django-extensions
 django-heroku
 dj-database-url
@@ -9,4 +9,4 @@ psycopg2
 psycopg2-binary==2.8.6
 whitenoise
 secret-key-generator
-django-money==2.2.0
+djmoney
