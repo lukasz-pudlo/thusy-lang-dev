@@ -3,6 +3,7 @@ from email.policy import default
 from django.db import models
 from djmoney.models.fields import MoneyField
 from djmoney.models.validators import MaxMoneyValidator, MinMoneyValidator
+from django.db.models.functions import Lower
 
 class Lesson(models.Model):
     name = models.CharField(
@@ -71,3 +72,15 @@ class Teacher(models.Model):
         verbose_name='Locations',
         related_name='location_teachers',
         related_query_name='location_teacher')
+    
+    class Meta:
+        ordering=['last_name', 'middle_name', 'first_name']
+        indexes=[models.Index(fields=['last_name']),
+        models.Index(
+            fields=['-last_name'],
+            name='desc_last_name_idx'),
+        models.Index(
+            Lower('last_name').desc(),
+            name='lower_last_name_idx'
+            )
+        ]
