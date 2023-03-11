@@ -50,4 +50,5 @@ class Lesson(models.Model):
         max_digits=19,
         decimal_places=2,
         default_currency='EUR',
-        null=False)
+        null=False,
+     )
