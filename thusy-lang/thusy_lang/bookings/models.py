@@ -1,7 +1,39 @@
 #from msilib.schema import Verb
+from email.policy import default
 from django.db import models
 from djmoney.models.fields import MoneyField
 from djmoney.models.validators import MaxMoneyValidator, MinMoneyValidator
+
+class Lesson(models.Model):
+    name = models.CharField(
+        verbose_name='Lesson Name',
+        max_length=255)
+    price_per_hour=MoneyField(
+        max_digits=19,
+        decimal_places=2,
+        default_currency='EUR',
+        null=False,
+        default=25,
+        validators=[
+            MinMoneyValidator(
+                {'EUR': 25, 'GBP': 20}),
+            MaxMoneyValidator(
+                {'EUR': 2500, 'GBP': 2000})
+        ]
+     )
+
+class Location(models.Model):
+    name = models.CharField(
+        verbose_name='Location Name',
+        max_length=255,
+        unique=False,
+        blank=False,
+        null=False)
+    address = models.CharField(
+        verbose_name='Address',
+        max_length=255)
+    max_pupils = models.IntegerField(
+        verbose_name='Max Pupils')
 
 class Teacher(models.Model):
     first_name = models.CharField(
@@ -28,34 +60,14 @@ class Teacher(models.Model):
         unique=False,
         blank=False,
         null=False)
-
-
-class Location(models.Model):
-    name = models.CharField(
-        verbose_name='Location Name',
-        max_length=255,
-        unique=False,
-        blank=False,
-        null=False)
-    address = models.CharField(
-        verbose_name='Address',
-        max_length=255)
-    max_pupils = models.IntegerField(
-        verbose_name='Max Pupils')
-
-class Lesson(models.Model):
-    name = models.CharField(
-        verbose_name='Lesson Name',
-        max_length=255)
-    price_per_hour=MoneyField(
-        max_digits=19,
-        decimal_places=2,
-        default_currency='EUR',
-        null=False,
-        validators=[
-            MinMoneyValidator(
-                {'EUR': 25, 'GBP': 20}),
-            MaxMoneyValidator(
-                {'EUR': 2500, 'GBP': 2000})
-        ]
-     )
+    lesson=models.ManyToManyField(
+        Lesson,
+        verbose_name='Lessons',
+        related_name='lesson_teachers',
+        related_query_name='lesson_teacher',
+        blank=True)
+    location=models.ManyToManyField(
+        Location,
+        verbose_name='Locations',
+        related_name='location_teachers',
+        related_query_name='location_teacher')
