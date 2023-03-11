@@ -1,4 +1,4 @@
-from msilib.schema import Verb
+#from msilib.schema import Verb
 from django.db import models
 from djmoney.models.fields import MoneyField
 
