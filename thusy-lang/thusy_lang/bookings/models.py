@@ -1,6 +1,7 @@
 #from msilib.schema import Verb
 from django.db import models
 from djmoney.models.fields import MoneyField
+from djmoney.models.validators import MaxMoneyValidator, MinMoneyValidator
 
 class Teacher(models.Model):
     first_name = models.CharField(
@@ -51,4 +52,10 @@ class Lesson(models.Model):
         decimal_places=2,
         default_currency='EUR',
         null=False,
+        validators=[
+            MinMoneyValidator(
+                {'EUR': 25, 'GBP': 20}),
+            MaxMoneyValidator(
+                {'EUR': 2500, 'GBP': 2000})
+        ]
      )
