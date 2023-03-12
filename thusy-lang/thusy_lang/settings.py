@@ -130,6 +130,8 @@ CURRENCY_CHOICES = [
     ('GBP', 'GBP £')
 ]
 
+AUTH_USER_MODEL = 'bookings.Teacher'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

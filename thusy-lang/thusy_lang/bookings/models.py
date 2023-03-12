@@ -4,6 +4,7 @@ from django.db import models
 from djmoney.models.fields import MoneyField
 from djmoney.models.validators import MaxMoneyValidator, MinMoneyValidator
 from django.db.models.functions import Lower
+from django.contrib.auth.models import AbstractUser
 
 class Lesson(models.Model):
     name = models.CharField(
@@ -36,7 +37,7 @@ class Location(models.Model):
     max_pupils = models.IntegerField(
         verbose_name='Max Pupils')
 
-class Teacher(models.Model):
+class Teacher(AbstractUser):
     first_name = models.CharField(
         verbose_name='First Name',
         max_length=75,
