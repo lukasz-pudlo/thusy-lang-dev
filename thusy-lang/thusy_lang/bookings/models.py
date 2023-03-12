@@ -37,7 +37,7 @@ class Location(models.Model):
     max_pupils = models.IntegerField(
         verbose_name='Max Pupils')
 
-class Teacher(AbstractUser):
+class Teacher(models.Model):
     first_name = models.CharField(
         verbose_name='First Name',
         max_length=75,
@@ -86,4 +86,8 @@ class Teacher(AbstractUser):
             )
         ]
     def __str__(self):
-        return self.model.first_name + ' ' + self.model.middle_name + ' ' + self.model.last_name
+        full_name = self.first_name
+        if self.middle_name:
+            full_name += ' ' + self.middle_name
+        full_name += ' ' + self.last_name
+        return full_name
