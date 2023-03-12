@@ -5,12 +5,14 @@ from djmoney.models.fields import MoneyField
 from djmoney.models.validators import MaxMoneyValidator, MinMoneyValidator
 from django.db.models.functions import Lower
 from django.contrib.auth.models import AbstractUser
+from .managers import EnglishTeacherManager, FrenchTeacherManager
+
 
 class Lesson(models.Model):
     name = models.CharField(
         verbose_name='Lesson Name',
         max_length=255)
-    price_per_hour=MoneyField(
+    price_per_hour = MoneyField(
         max_digits=19,
         decimal_places=2,
         default_currency='EUR',
@@ -22,7 +24,8 @@ class Lesson(models.Model):
             MaxMoneyValidator(
                 {'EUR': 2500, 'GBP': 2000})
         ]
-     )
+    )
+
 
 class Location(models.Model):
     name = models.CharField(
@@ -37,6 +40,7 @@ class Location(models.Model):
     max_pupils = models.IntegerField(
         verbose_name='Max Pupils')
 
+
 class Teacher(models.Model):
     first_name = models.CharField(
         verbose_name='First Name',
@@ -45,13 +49,13 @@ class Teacher(models.Model):
         blank=False,
         null=False)
     middle_name = models.CharField(
-        verbose_name='Middle Name', 
+        verbose_name='Middle Name',
         max_length=75,
         unique=False,
         blank=True,
         null=True)
     last_name = models.CharField(
-        verbose_name='Last Name', 
+        verbose_name='Last Name',
         max_length=75,
         unique=False,
         blank=False,
@@ -62,29 +66,34 @@ class Teacher(models.Model):
         unique=False,
         blank=False,
         null=False)
-    lesson=models.ManyToManyField(
+    lesson = models.ManyToManyField(
         Lesson,
         verbose_name='Lessons',
         related_name='lesson_teachers',
         related_query_name='lesson_teacher',
         blank=True)
-    location=models.ManyToManyField(
+    location = models.ManyToManyField(
         Location,
         verbose_name='Locations',
         related_name='location_teachers',
         related_query_name='location_teacher')
-    
+
+    objects = models.Manager()
+    english_objects = EnglishTeacherManager()
+    french_objects = FrenchTeacherManager()
+
     class Meta:
-        ordering=['last_name', 'middle_name', 'first_name']
-        indexes=[models.Index(fields=['last_name']),
-        models.Index(
+        ordering = ['last_name', 'middle_name', 'first_name']
+        indexes = [models.Index(fields=['last_name']),
+                   models.Index(
             fields=['-last_name'],
             name='desc_last_name_idx'),
-        models.Index(
+            models.Index(
             Lower('last_name').desc(),
             name='lower_last_name_idx'
-            )
+        )
         ]
+
     def __str__(self):
         full_name = self.first_name
         if self.middle_name:
