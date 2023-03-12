@@ -84,3 +84,5 @@ class Teacher(models.Model):
             name='lower_last_name_idx'
             )
         ]
+    def __str__(self):
+        return self.model.first_name + ' ' + self.model.middle_name + ' ' + self.model.last_name
