@@ -16,11 +16,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-# Uncomment next two lines to enable admin:
-#from django.contrib import admin
-#from django.urls import path
+from django.contrib import admin
+from django.urls import path
 
-urlpatterns = [
-    # Uncomment the next line to enable the admin:
-    #path('admin/', admin.site.urls)
-]
+from django.conf import settings
+from django.conf.urls import static
+
+urlpatterns = [...] + static(
+    settings.STATIC_URL, 
+    document_root = settings.STATIC_ROOT
+)
+
+
+#Alternative way of setting up static files according to Michael Dinder in "Becoming Enterprise Django Developer"
+#urlpatterns = [...]
+#if settings.DEBUG:
+#    urlpatterns += static(
+#        settings.STATIC_URL, 
+#        document_root = settings.STATIC_ROOT
+#    )
