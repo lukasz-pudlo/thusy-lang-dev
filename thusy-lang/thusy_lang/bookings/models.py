@@ -7,7 +7,6 @@ from django.db.models.functions import Lower
 from django.contrib.auth.models import AbstractUser
 from .managers import EnglishTeacherManager, FrenchTeacherManager
 
-
 class Lesson(models.Model):
     name = models.CharField(
         verbose_name='Lesson Name',
